@@ -1,8 +1,7 @@
 import { Router } from "express"
-export const route=Router()
+import { userLoginController } from "../controllers/common/loginFunctionController"
+export const route = Router()
 
 // user routes
 
-route.get('/',(req:any,res:any)=>{
-    res.send("ok")
-})
+route.get('/', userLoginController)
