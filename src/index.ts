@@ -2,8 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import 'reflect-metadata'
 import dotenv from 'dotenv'
+import expressFileUpload from 'express-fileupload'
 import { route } from './routes/router'
 import { AppDataSource } from './DbConfig'
+
 dotenv.config()
 const app = express()
 AppDataSource.initialize().then(() => {
@@ -13,6 +15,7 @@ AppDataSource.initialize().then(() => {
 })
 app.use(express.json())
 app.use(cors())
+app.use(expressFileUpload())
 app.use('/v1/api', route)
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {

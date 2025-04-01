@@ -1,7 +1,13 @@
 import { Router } from "express"
-import { userLoginController } from "../controllers/common/loginFunctionController"
+import { getDoctors, getPatients, userLoginController, userRegisterController } from "../controllers/common/loginFunctionController"
+import { authUser } from "../middleware/verifyToken"
 export const route = Router()
 
-// user routes
+route.post("/login",userLoginController)
+route.post("/register",userRegisterController)
 
-route.get('/', userLoginController)
+
+//admin route
+
+route.get('/patients',authUser,getPatients)
+route.get('/doctors',authUser,getDoctors)
