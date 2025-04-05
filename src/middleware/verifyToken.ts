@@ -7,11 +7,12 @@ export const authUser = async (req: any, res: any, next: any) => {
         return createResponse(res, 404, "Token Not Found!", [], false, true);
     }
     else {
-        await jsonwebtoken.verify(tokenKey, `${process.env.JWTSECRET}`, (err: any) => {
+        await jsonwebtoken.verify(tokenKey, `${process.env.JWTSECRET}`, (err: any, decode: any) => {
             if (err) {
                 return createResponse(res, 401, "Invalid token !", [], false, true);
             }
             else {
+                req.user = decode;
                 next()
             }
         })
