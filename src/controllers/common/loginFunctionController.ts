@@ -39,8 +39,8 @@ export const userRegisterController = async (req: any, res: any) => {
             const result = await TblName.save(finalData);
             return createResponse(res, 201, "User register successfully !", result, true, false)
         }
-    } catch (err) {
-        // console.log(err);
+    } catch (err: any) {
+        console.log(err.message);
         createResponse(res, 500, "Internal Server Error", [], false, true);
     }
 }
@@ -84,7 +84,14 @@ export const resetPassword = async (req: any, res: any) => {
 
 export const getPatients = async (req: any, res: any) => {
     try {
-        const result = await Patient.find()
+        const search = "S";
+        const { page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
+        // if (search.length > 0) {
+        //     const result = await Patient.createQueryBuilder("patient").where("Patient.name ILIKE :namePrefix", { namePrefix: `%${search}%` }).skip(skip).take(limit).getMany();
+        // }
+        const result = await Patient.createQueryBuilder("Patients").take(limit).getMany()
+
         createResponse(res, 200, "Data Fetch Successfully!", result, true, false);
     } catch (error) {
         createResponse(res, 500, "Internal Server Error", [], false, true);

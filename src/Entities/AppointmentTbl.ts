@@ -1,4 +1,4 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column ,Generated } from "typeorm"
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, Generated } from "typeorm"
 
 @Entity({ name: "AppointmentTbl" })
 export class AppointmentTbl extends BaseEntity {
@@ -21,13 +21,10 @@ export class AppointmentTbl extends BaseEntity {
     @Column({ name: "symptoms", type: "text", default: null })
     symptoms: any
 
-    @Column({ name: "timeSlot", type: "timestamp" })
-    timeSlot: any;
-
-    @Column({ name: "payment", type: "decimal", precision: 10, scale: 2, default: null, })
+    @Column({ name: "payment", type: "varchar", default: null, })
     payment: any
 
-    @Column({ name: "status", type: "varchar", length: 50, default: null })
+    @Column({ name: "status", type: "varchar", length: 50, default: "In-progress" })
     status: any
 
     @Column({ name: "appointmentType", type: "varchar", length: 50, default: null })
@@ -36,10 +33,14 @@ export class AppointmentTbl extends BaseEntity {
     @Column({ name: "date", type: "date", default: null })
     date: any
 
-    @Column({ name: "createdAt", type: "timestamptz" ,default:()=>'CURRENT_TIMESTAMP'})
+
+    @Column({ name: "startTime", type: "time", default: null })
+    startTime: any
+
+    @Column({ name: "createdAt", type: "timestamptz", default: () => 'CURRENT_TIMESTAMP' })
     createdAt: any
 
-    @Column({ name: "updatedAt", type: "timestamptz" ,default:()=>'CURRENT_TIMESTAMP'})
+    @Column({ name: "updatedAt", type: "timestamptz", default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: any
 
 }
