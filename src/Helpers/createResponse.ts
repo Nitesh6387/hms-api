@@ -5,6 +5,5 @@ export const createResponse=(res:any,code:any=200,message:any='',data:any=[],suc
             success ,
             error ,
             data ,
-            
         })
 }

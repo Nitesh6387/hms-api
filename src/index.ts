@@ -6,6 +6,8 @@ import expressFileUpload from 'express-fileupload'
 import { route } from './routes/router'
 import { AppDataSource } from './DbConfig'
 import path from 'path'
+import limiter from './middleware/limitRate'
+
 
 dotenv.config()
 const app = express()
@@ -14,6 +16,8 @@ AppDataSource.initialize().then(() => {
 }).catch((err: any) => {
     console.log(err);
 })
+
+// app.use(limiter)
 app.use(express.json())
 app.use(cors())
 app.use(expressFileUpload())
