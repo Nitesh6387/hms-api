@@ -59,4 +59,6 @@ export class Doctor extends BaseEntity {
     @Column({ name: "updatedAt", type: "timestamptz", default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: any
 
+    @Column({ name: "isDeleted", type: "boolean", default: false })
+    isDeleted: any;
 }

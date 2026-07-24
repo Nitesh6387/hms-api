@@ -44,3 +44,18 @@ export const delDepartment = async (req: any, res: any) => {
         createResponse(res, 500, "Internal Server Error", [], false, true);
     }
 }
+export const updateDepartmentController = async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    if (!name) return createResponse(res, 400, "Name is required", [], false, true);
+    const department = await Department.findOne({ where: { id } });
+    if (!department) return createResponse(res, 404, "Department not found", [], false, true);
+    department.name = name.trim().toLowerCase();
+    await department.save();
+    return createResponse(res, 200, "Department updated", department, true, false);
+  } catch (error: any) {
+    console.error(error.message);
+    return createResponse(res, 500, "Internal server error", [], false, true);
+  }
+};

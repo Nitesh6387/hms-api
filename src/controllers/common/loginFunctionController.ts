@@ -83,25 +83,25 @@ export const resetPassword = async (req: any, res: any) => {
 
 
 export const getPatients = async (req: any, res: any) => {
-    try {
-        const search = "S";
-        const { page = 1, limit = 10 } = req.query;
-        const skip = (page - 1) * limit;
-        // if (search.length > 0) {
-        //     const result = await Patient.createQueryBuilder("patient").where("Patient.name ILIKE :namePrefix", { namePrefix: `%${search}%` }).skip(skip).take(limit).getMany();
-        // }
-        const result = await Patient.createQueryBuilder("Patients").take(limit).getMany()
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
+    const result = await Patient.createQueryBuilder("Patients")
+      .where("Patients.isDeleted = false")
+      .skip(skip)
+      .take(limit)
+      .getMany();
+    createResponse(res, 200, "Data Fetch Successfully!", result, true, false);
+  } catch (error) {
+    createResponse(res, 500, "Internal Server Error", [], false, true);
+  }
+};
 
-        createResponse(res, 200, "Data Fetch Successfully!", result, true, false);
-    } catch (error) {
-        createResponse(res, 500, "Internal Server Error", [], false, true);
-    }
-}
 export const getDoctors = async (req: any, res: any) => {
-    try {
-        const result = await Doctor.find()
-        createResponse(res, 200, "Data Fetch Successfully!", result, true, false);
-    } catch (error) {
-        createResponse(res, 500, "Internal Server Error", [], false, true);
-    }
-}
+  try {
+    const result = await Doctor.find({ where: { isDeleted: false } });
+    createResponse(res, 200, "Data Fetch Successfully!", result, true, false);
+  } catch (error) {
+    createResponse(res, 500, "Internal Server Error", [], false, true);
+  }
+};

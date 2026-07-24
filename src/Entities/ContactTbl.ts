@@ -21,7 +21,7 @@ export class AppointmentTbl extends BaseEntity {
     @Column({ name: "symptoms", type: "text", default: null })
     symptoms: any
 
-    @Column({ name: "timeSlot", type: "timestamp" })
+    @Column({ name: "timeSlot", type: "timestamp", default: null })
     timeSlot: any;
 
     @Column({ name: "payment", type: "decimal", precision: 10, scale: 2, default: null, })

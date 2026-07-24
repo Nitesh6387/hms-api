@@ -19,20 +19,23 @@ export const getDoctorBydepartmentIdController = async (req: any, res: any) => {
 }
 
 export const GetaddapByDoctorController = async (req: any, res: any) => {
-    const { doctorId } = req.query;
-    const queryBuilder = AppointmentTbl.createQueryBuilder('apptbl')
-        .select([
-            "patient.name", "patient.email",//Patient ka data nikal rhe hai
-            "department.name", "department.name",//Department ka data nikal rhe hai
-            "doctor.name", "doctor.fees", "doctor.profile", "doctor.specialist",
-            "apptbl.id", "apptbl.disease", "apptbl.symptoms", "apptbl.status", "apptbl.appointmentType", "apptbl.date", "apptbl.startTime", "apptbl.payment", "apptbl.createdAt"
-        ])
-        .leftJoin(Patient, "patient", `apptbl.patientId=patient.id::varchar`)
-        .leftJoin(Department, "department", `apptbl.departmentId=department.id::varchar`)
-        .leftJoin(Doctor, "doctor", `apptbl.doctorId=doctor.id::varchar`)
-        .where('apptbl.doctorId=:doctorId', { doctorId })
-    const result = await queryBuilder.getRawMany()
-
-
-    res.send(result)
+    try {
+        const { doctorId } = req.params;
+        const queryBuilder = AppointmentTbl.createQueryBuilder('apptbl')
+            .select([
+                "patient.name", "patient.email",//Patient ka data nikal rhe hai
+                "department.name", "department.name",//Department ka data nikal rhe hai
+                "doctor.name", "doctor.fees", "doctor.profile", "doctor.specialist",
+                "apptbl.id", "apptbl.disease", "apptbl.symptoms", "apptbl.status", "apptbl.appointmentType", "apptbl.date", "apptbl.startTime", "apptbl.payment", "apptbl.createdAt"
+            ])
+            .leftJoin(Patient, "patient", `apptbl.patientId=patient.id::varchar`)
+            .leftJoin(Department, "department", `apptbl.departmentId=department.id::varchar`)
+            .leftJoin(Doctor, "doctor", `apptbl.doctorId=doctor.id::varchar`)
+            .where('apptbl.doctorId=:doctorId', { doctorId })
+        const result = await queryBuilder.getRawMany()
+        createResponse(res, 200, "Appointment Data Fetch successfully", result, true, false);
+    } catch (error) {
+        return createResponse(res, 500, "Internal server error", [], false, true)
+        console.error(error)
+    }
 };

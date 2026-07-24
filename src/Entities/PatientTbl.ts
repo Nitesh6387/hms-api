@@ -1,4 +1,4 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column,   Generated } from "typeorm"
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, Generated } from "typeorm"
 
 @Entity({ name: "Patient" })
 export class Patient extends BaseEntity {
@@ -36,10 +36,13 @@ export class Patient extends BaseEntity {
     @Column({ name: "token", type: "varchar", length: 255, default: null })
     token: any
 
-    @Column({ name: "createdAt", type: "timestamptz" ,default:()=>'CURRENT_TIMESTAMP'})
+    @Column({ name: "createdAt", type: "timestamptz", default: () => 'CURRENT_TIMESTAMP' })
     createdAt: any
 
-    @Column({ name: "updatedAt", type: "timestamptz" ,default:()=>'CURRENT_TIMESTAMP'})
+    @Column({ name: "updatedAt", type: "timestamptz", default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: any;
+
+    @Column({ name: "isDeleted", type: "boolean", default: false })
+    isDeleted: any;
 
 }
