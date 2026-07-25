@@ -13,6 +13,7 @@ import { getDoctorProfileController, updateDoctorProfileController, updateAvaila
 import { getDoctorAppointmentsController, getDoctorAppointmentByIdController, updateAppointmentStatusByDoctorController } from "../controllers/DoctorController/AppointmentController";
 import { getPatientProfileController, updatePatientProfileController, changePatientPasswordController } from "../controllers/PatientController/ProfileController";
 import { getPatientAppointmentByIdController, cancelAppointmentController, rescheduleAppointmentController } from "../controllers/PatientController/AppointmentController";
+import { createContactController, getAllContactsController, getContactByIdController, updateContactStatusController, deleteContactController } from "../controllers/common/ContactController";
 
 export const route = Router();
 
@@ -21,6 +22,7 @@ route.post("/login", limiter, userLoginController);
 route.post("/register", userRegisterController);
 route.post('/forget-password', forgetPassword);
 route.post('/reset-password', resetPassword);
+route.post('/contact', createContactController);
 route.get('/departments', getDepartments); // public
 
 // ADMIN ROUTES (all require auth)
@@ -29,7 +31,7 @@ route.delete('/admin/removePatient/:id', authUser, removePatientById);
 route.put('/admin/patient/:id', authUser, updatePatientByAdminController);
 route.patch('/admin/patient/:id/activate', authUser, activatePatientController);
 
-route.get('/admin/doctors', authUser, getDoctors);
+route.get('/admin/doctors', getDoctors);
 route.post('/admin/doctor', authUser, addDoctorController);
 route.put('/admin/doctor/:id', authUser, updateDoctorController);
 route.delete('/admin/doctor/:id', authUser, deleteDoctorController);
@@ -47,6 +49,12 @@ route.put('/admin/department/:id', authUser, updateDepartmentController);
 route.delete('/admin-delete-department', authUser, delDepartment);
 
 route.get('/admin/stats', authUser, getDashboardStatsController);
+
+// Contact Management (Admin only)
+route.get('/admin/contacts', authUser, getAllContactsController);
+route.get('/admin/contact/:id', authUser, getContactByIdController);
+route.patch('/admin/contact/:id/status', authUser, updateContactStatusController);
+route.delete('/admin/contact/:id', authUser, deleteContactController);
 
 // DOCTOR ROUTES
 route.get('/get-doctor-by-departmentId', authUser, getDoctorBydepartmentIdController);

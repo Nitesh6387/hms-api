@@ -1,45 +1,31 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column ,Generated } from "typeorm"
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
-@Entity({ name: "AppointmentTbl" })
-export class AppointmentTbl extends BaseEntity {
-    @PrimaryGeneratedColumn({ name: "id" })
-    @Generated('uuid')
-    id: any
+@Entity({ name: "Contact" })
+export class Contact extends BaseEntity {
+  @PrimaryGeneratedColumn({ name: "id" })
+  id!: number;
 
-    @Column({ name: "patientId", type: "varchar", default: null })
-    patientId: any
+  @Column({ name: "name", type: "varchar", length: 100 })
+  name!: string;
 
-    @Column({ name: "departmentId", type: "varchar", default: null })
-    departmentId: any
+  @Column({ name: "email", type: "varchar", length: 100 })
+  email!: string;
 
-    @Column({ name: "doctorId", type: "varchar", default: null })
-    doctorId: any
+  @Column({ name: "subject", type: "varchar", length: 255 })
+  subject!: string;
 
-    @Column({ name: "disease", type: "text", default: null })
-    disease: any
+  @Column({ name: "message", type: "text" })
+  message!: string;
 
-    @Column({ name: "symptoms", type: "text", default: null })
-    symptoms: any
+  @Column({ name: "phone", type: "varchar", length: 20, nullable: true })
+  phone?: string;
 
-    @Column({ name: "timeSlot", type: "timestamp", default: null })
-    timeSlot: any;
+  @Column({ name: "isRead", type: "boolean", default: false })
+  isRead!: boolean;
 
-    @Column({ name: "payment", type: "decimal", precision: 10, scale: 2, default: null, })
-    payment: any
+  @CreateDateColumn({ name: "createdAt", type: "timestamptz" })
+  createdAt!: Date;
 
-    @Column({ name: "status", type: "varchar", length: 50, default: null })
-    status: any
-
-    @Column({ name: "appointmentType", type: "varchar", length: 50, default: null })
-    appointmentType: any
-
-    @Column({ name: "date", type: "date", default: null })
-    date: any
-
-    @Column({ name: "createdAt", type: "timestamptz" ,default:()=>'CURRENT_TIMESTAMP'})
-    createdAt: any
-
-    @Column({ name: "updatedAt", type: "timestamptz" ,default:()=>'CURRENT_TIMESTAMP'})
-    updatedAt: any
-
+  @UpdateDateColumn({ name: "updatedAt", type: "timestamptz" })
+  updatedAt!: Date;
 }

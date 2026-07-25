@@ -27,6 +27,9 @@ export class Admin extends BaseEntity {
   @Column({ name: "token", type: "varchar", length: 255, default: null })
   token: any
 
+  @Column({ name: "isActive", type: "boolean", default: true })
+  isActive: any
+
   @Column({ name: "createdAt", type: "timestamptz", default: () => 'CURRENT_TIMESTAMP' })
   createdAt: any
 
